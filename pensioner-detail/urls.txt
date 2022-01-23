@@ -1,0 +1,5 @@
+Pensioner Detail Service
+http://localhost:8000/pensionerDetailByAadhaar/{aadharNumber}
+
+Process Pension Service
+http://localhost:8100/ProcessPension/{aadharNumber}

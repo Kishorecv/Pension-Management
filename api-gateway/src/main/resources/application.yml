@@ -1,0 +1,36 @@
+cloud:
+    gateway:
+      routes:
+        - id: pensioner-detail
+          uri: lb://pensioner-detail
+          predicates:
+            - Path=/pensioner-detail/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: pensioner-detail
+                fallbackuri: forward:/pensionerDetailFallBack
+        - id: process-pension
+          uri: lb://process-pension
+          predicates:
+            - Path=/process-pension/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: process-pension
+                fallbackuri: forward:/processPensionFallBack
+                
+                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000  
